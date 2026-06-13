@@ -43,25 +43,15 @@ def _require(name: str) -> str:
     # Try Streamlit secrets first (running in Streamlit Cloud)
     try:
         import streamlit as st
-        # Streamlit secrets are accessed as a dictionary-like object
-        # Keys should be lowercase as in .toml files
-        secret_key = name.lower().replace("_", "")  # e.g., NEO4J_URI -> neo4juri for fallback
-        
-        # Try exact key first (e.g., neo4j_uri)
-        if hasattr(st, "secrets"):
-            try:
-                value = st.secrets[name.lower()]
+        if hasattr(st, "secrets") and len(st.secrets) > 0:
+            # Streamlit secrets dict uses lowercase keys from TOML file
+            secret_key_lower = name.lower()
+            if secret_key_lower in st.secrets:
+                value = st.secrets[secret_key_lower]
                 if value and "CHANGE_ME" not in str(value):
                     return str(value).strip()
-            except (KeyError, AttributeError):
-                # Try alternate formats
-                for alt_key in [name.lower(), name, name.replace("_", "")]:
-                    if alt_key in st.secrets:
-                        val = st.secrets[alt_key]
-                        if val and "CHANGE_ME" not in str(val):
-                            return str(val).strip()
-    except (ImportError, AttributeError, TypeError):
-        pass  # Not in Streamlit or secrets not accessible
+    except Exception:
+        pass  # Not in Streamlit, secrets not loaded, or any other error
     
     # Fall back to environment variables (local development)
     value = os.getenv(name, "").strip()
