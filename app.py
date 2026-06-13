@@ -46,8 +46,20 @@ if st.sidebar.button("🔍 Search", use_container_width=True):
     if not search_query.strip():
         st.error("Please enter a search query.")
     else:
-        with st.spinner("Searching graph..."):
-            result = rag_search(search_query, region=region_filter)
+        try:
+            with st.spinner("Searching graph..."):
+                result = rag_search(search_query, region=region_filter)
+        except Exception as e:
+            st.error(f"⚠️ Connection Error: {str(e)}")
+            st.info("**Troubleshooting:**\n"
+                   "1. Go to Streamlit Cloud app settings → Secrets\n"
+                   "2. Verify these keys are set:\n"
+                   "   - `neo4j_uri`\n"
+                   "   - `neo4j_username`\n"
+                   "   - `neo4j_password`\n"
+                   "   - `neo4j_database`\n"
+                   "3. Click 'Rerun app' after adding/updating secrets")
+            st.stop()
         
         if result.get("status") == "success":
             st.success(result["summary"])
