@@ -1,0 +1,14 @@
+# Core driver for talking to Neo4j (Aura or local) over the Bolt protocol.
+neo4j>=5.20
+
+# Loads connection settings from a local .env file (keeps secrets out of code).
+python-dotenv>=1.0
+
+# Embedding model for semantic search (free, runs locally)
+sentence-transformers>=3.0.0
+
+# Claude API client for generation
+anthropic>=0.31.0
+
+# Web UI framework for RAG interface
+streamlit>=1.35.0
