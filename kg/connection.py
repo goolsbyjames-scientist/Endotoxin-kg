@@ -39,12 +39,25 @@ class MissingConfig(RuntimeError):
 
 
 def _require(name: str) -> str:
+    """Get config from Streamlit secrets (cloud) or environment variables (local)."""
+    # Try Streamlit secrets first (running in Streamlit Cloud)
+    try:
+        import streamlit as st
+        if hasattr(st, "secrets") and name.lower() in st.secrets:
+            value = st.secrets[name.lower()]
+            if value and "CHANGE_ME" not in str(value):
+                return str(value).strip()
+    except (ImportError, AttributeError, KeyError):
+        pass  # Not in Streamlit or secrets not found
+    
+    # Fall back to environment variables (local development)
     value = os.getenv(name, "").strip()
     if not value or "CHANGE_ME" in value:
         raise MissingConfig(
-            f"Environment variable {name!r} is not set.\n"
-            f"Copy .env.example to .env and fill in your Neo4j Aura credentials.\n"
-            f"(See README.md → 'Connect to Aura'.)"
+            f"Configuration {name!r} is not set.\n"
+            f"Local: Copy .env.example to .env and fill in your Neo4j Aura credentials.\n"
+            f"Cloud: Add secrets via Streamlit Cloud UI (Settings → Secrets).\n"
+            f"(See README.md or DEPLOYMENT_README.md for details.)"
         )
     return value
 
