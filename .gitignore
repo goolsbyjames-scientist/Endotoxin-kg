@@ -2,6 +2,14 @@
 .env
 .streamlit/secrets.toml
 
+# Raw source documents (e.g. downloaded PDFs) — may be copyrighted; keep local.
+# The derived, non-copyrighted extractions under data/extracted/ ARE tracked.
+data/raw/
+
+# Personal, machine-local Claude Code settings (permission allowlist, etc.).
+# The shared, project-level config lives in .claude/settings.json instead.
+.claude/settings.local.json
+
 # Python
 __pycache__/
 *.py[cod]
