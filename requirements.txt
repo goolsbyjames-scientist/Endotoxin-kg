@@ -12,3 +12,7 @@ anthropic>=0.31.0
 
 # Web UI framework for RAG interface
 streamlit>=1.35.0
+
+# Render local PDF pages to images for extraction (Read tool needs poppler on
+# Windows, which isn't installed; PyMuPDF is the portable fallback)
+PyMuPDF>=1.24.0

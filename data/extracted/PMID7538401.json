@@ -1,0 +1,156 @@
+{
+  "_meta": {
+    "status": "extracted (pre-verify) — from local PDF via PyMuPDF render",
+    "extracted_by": "extract-article skill (subagent, read PDF pages as images)",
+    "reconciled": "2026-06-13",
+    "note": "Cloning/sequence paper. Many 'experimental' claims are really sequence-analysis/computational; flagged for review. doi is null -> load step must key on pmid."
+  },
+  "document": {
+    "labels": [":Document", ":Article"],
+    "doi": null, "pmid": "7538401", "pmc": null,
+    "title": "Molecular cloning and sequence analysis of Factor C cDNA from the Singapore horseshoe crab, Carcinoscorpius rotundicauda",
+    "venue": "Molecular Marine Biology and Biotechnology",
+    "year": 1995, "volume": "4", "issue": "2", "pages": "90-103",
+    "open_access": false, "fabio_type": "fabio:JournalArticle"
+  },
+  "authors": [
+    {"name": "Jeak L. Ding", "role": "corresponding", "orcid": null, "affiliation": "Marine Biotechnology Laboratory / BioScience Centre, Department of Zoology, National University of Singapore"},
+    {"name": "M. Anthony A. Navas III", "role": "author", "orcid": null, "affiliation": "Department of Zoology, National University of Singapore (present address: Dept of Biochemistry, Baylor College, Houston, TX)"},
+    {"name": "Bow Ho", "role": "author", "orcid": null, "affiliation": "Department of Microbiology, National University of Singapore"}
+  ],
+  "institutions": [
+    {"name": "National University of Singapore", "ror": null, "city": "Singapore", "note": "Depts of Zoology & Microbiology; Marine Biotechnology Lab"},
+    {"name": "Baylor College", "ror": null, "city": "Houston, TX, USA", "note": "present address of Navas; low priority"}
+  ],
+  "methods": [
+    {"id": "M1", "name": "Amoebocyte procurement & total/poly(A)+ RNA preparation", "params": "cardiac bleed into 3% NaCl + N-ethylmaleimide; guanidinium isothiocyanate lysis; CsCl ultracentrifugation; Oligo-dT selection; pyrogen-free 0-4C"},
+    {"id": "M2", "name": "Directional cDNA synthesis and cloning into lambda-gt22", "params": "Gubler & Hoffman; NotI primer-adaptors; EcoRI adaptors; directional ligation into lambda-gt22; E. coli LE392/Y1090"},
+    {"id": "M3", "name": "Library screening / plaque hybridization (heterologous TtFC53 probe)", "params": "32P TtFC53 probe; 40 presumptive clones, 16 studied; Factor C = 0.03% of library"},
+    {"id": "M4", "name": "Restriction mapping of CrFC clones", "params": "EcoRI/NotI orientation maps; full maps CrFC21/26 vs TtFC53/41"},
+    {"id": "M5", "name": "Subcloning EE and EN fragments into pGEM 11Zf(+)", "params": "E. coli JM109; orientation via XhoI; pEE/pEN"},
+    {"id": "M6", "name": "DNA sequencing (Sanger dideoxy, both strands) with exonuclease deletions", "params": "Sanger 1977; Exo/ExoEN deletion subclones; T7/SP6 primers"},
+    {"id": "M7", "name": "Northern blot analysis of amoebocyte RNA", "params": "glyoxal denaturation; heterologous TtFC53 probe (low stringency 42C) vs homologous CrFC26 EE / 368-bp probe (high stringency 65C)"},
+    {"id": "M8", "name": "Southern blot hybridization of CrFC clones", "params": "EcoRI+NotI digests; TtFC53 then 3'-EN / TtFC41 reprobe"},
+    {"id": "M9", "name": "EMBL gene-bank homology search of catalytic domain", "params": "% homology over overlapping bp (Table 1)"},
+    {"id": "M10", "name": "Computational mRNA secondary-structure prediction of 5' UTR", "params": "folding of CrFC21/26 5' ends; AUG accessibility"},
+    {"id": "M11", "name": "Kyte-Doolittle hydropathy analysis of N-terminus", "params": "first 59 residues of CrFC26; window=7; signal-peptide ID"},
+    {"id": "M12", "name": "In vitro transcription-coupled-translation (TnT) expression assay", "params": "T7-driven CrFC21 vs CrFC26; 'unpublished data, patent pending'"},
+    {"id": "M13", "name": "Domain / catalytic-triad structural annotation by homology", "params": "domain boundaries (Furie & Furie); triad by trypsin analogy; specificity from Asp at trypsin-189-equivalent"}
+  ],
+  "preparations": [
+    {"id": "P-CrFC26", "name": "C. rotundicauda Factor C cDNA, long form", "abbrev": "CrFC26", "produced_by": "M2", "note": "4182 bp; 568-nt 5'UTR (7 false ATGs); ORF 3249 nt; signal 24aa + zymogen 1059 res; calc MW 120,244 Da"},
+    {"id": "P-CrFC21", "name": "C. rotundicauda Factor C cDNA, short form", "abbrev": "CrFC21", "produced_by": "M2", "note": "3448 bp; lacks most 5'UTR; exposed AUG/Kozak; 5' identical to TtFC53; distinct mRNA, not a truncation"},
+    {"id": "P-TtFC53", "name": "T. tridentatus Factor C cDNA, 5' partial (Muta 1991)", "abbrev": "TtFC53", "produced_by": null, "note": "external reference clone, 2470 bp; heterologous probe; cross-species comparison spine"},
+    {"id": "P-TtFC41", "name": "T. tridentatus Factor C cDNA, 3' partial (Muta 1991)", "abbrev": "TtFC41", "produced_by": null, "note": "external reference clone, 2036 bp"},
+    {"id": "P-CrFC45", "name": "C. rotundicauda clone CrFC45 (non-cross-hybridizing)", "abbrev": "CrFC45", "produced_by": "M2", "note": "homologous only to 5' EE region; no internal EcoRI"},
+    {"id": "P-CrFC63", "name": "C. rotundicauda clone CrFC63 (non-cross-hybridizing)", "abbrev": "CrFC63", "produced_by": "M2", "note": "not similar to other CrFC in 3' region"},
+    {"id": "P-amoebocyteRNA", "name": "C. rotundicauda amoebocyte total/poly(A)+ RNA", "abbrev": "amoebocyteRNA", "produced_by": "M1", "note": "Northern ~4.0 kNt mRNA (+15.8, 5.9 kNt low-stringency bands)"}
+  ],
+  "claims": [
+    {"id": "AC1", "tier": "atomic", "basis": "experimental", "text": "Factor C cDNA is a rare-copy gene, only 0.03% of the C. rotundicauda amoebocyte library.", "quote": "only 0.03% of the cDNA library was positive for Factor C cDNA, indicating its status as a rare copy gene", "value": 0.03, "unit": "% of library", "compares": ["P-amoebocyteRNA"], "under": ["readout:plaque hybridization", "probe:TtFC53"], "stance": "supports", "confidence": 0.9, "evidence_figure": "Results/Fig 2", "verify": false},
+    {"id": "AC2", "tier": "atomic", "basis": "experimental", "text": "Two distinct Factor C cDNA forms were cloned: CrFC26 (4182 bp) and CrFC21 (3448 bp).", "quote": "Two forms of Factor C cDNAs: CrFC21 (3448 bp) and CrFC26 (4182 bp) have been cloned into lambda gt22.", "compares": ["P-CrFC26", "P-CrFC21"], "under": ["readout:DNA sequencing"], "stance": "supports", "confidence": 0.95, "evidence_figure": "Fig 5/Fig 3", "verify": false},
+    {"id": "AC3", "tier": "atomic", "basis": "experimental", "text": "CrFC26 = 568 nt 5'UTR (7 false-start ATGs), 3249-nt ORF, stop, 365 nt 3'UTR.", "quote": "568 nucleotides of 5' untranslated sequence containing seven ATGs before the real initiation site, an ORF of 3249 nucleotides ... and 365 nucleotides of 3' untranslated sequence", "value": 3249, "unit": "nt ORF", "compares": ["P-CrFC26"], "under": ["readout:DNA sequencing"], "stance": "supports", "confidence": 0.95, "evidence_figure": "Fig 5", "verify": false},
+    {"id": "AC4", "tier": "atomic", "basis": "experimental", "text": "CrFC26 ORF encodes a 24-aa signal peptide + 1059-residue zymogen (1083 aa total).", "quote": "The ORF codes for a signal peptide of 24 amino acids and a Factor C zymogen of 1059 residues", "value": 1059, "unit": "residues", "compares": ["P-CrFC26"], "under": ["readout:deduced sequence"], "stance": "supports", "confidence": 0.95, "evidence_figure": "Fig 5", "verify": false},
+    {"id": "AC5", "tier": "atomic", "basis": "computational", "text": "Unglycosylated CrFC26 zymogen calc MW 120,244 Da, close to purified native enzyme MW.", "quote": "prior to N-glycosylation, has a calculated molecular weight of 120,244 daltons. This is close to the estimated molecular weight of single- and double-chain Factor C enzymes purified from the amoebocytes", "value": 120244, "unit": "Da", "compares": ["P-CrFC26"], "under": ["state:pre-glycosylation", "cross-check:native enzyme"], "stance": "supports", "confidence": 0.85, "evidence_figure": "Fig 5/text", "verify": false},
+    {"id": "AC6", "tier": "atomic", "basis": "experimental", "text": "CrFC contains six potential N-glycosylation sites (Asn-Xaa-Ser/Thr), as in TtFC.", "quote": "similar to TtFC, there are six potential N-glycosylation sites within the CrFC sequence Asn-Xaa-Ser/Thr", "value": 6, "unit": "sites", "compares": ["P-CrFC26", "P-TtFC53"], "under": ["motif:Asn-Xaa-Ser/Thr"], "stance": "supports", "confidence": 0.85, "evidence_figure": "Fig 5", "verify": false},
+    {"id": "AC7", "tier": "atomic", "basis": "computational", "text": "CrFC has a serine-protease catalytic triad Asp-His-Ser (His873-Asp929-Ser1030 in CrFC26).", "quote": "also contain the catalytic triad, His809-Asp865-Ser966 for CrFC21 and His873-Asp929-Ser1030 for CrFC26", "compares": ["P-CrFC26", "P-CrFC21"], "under": ["readout:deduced sequence", "analogy:trypsin"], "stance": "supports", "confidence": 0.9, "evidence_figure": "Fig 5", "verify": false},
+    {"id": "AC8", "tier": "atomic", "basis": "computational", "text": "The endotoxin-activation cleavage site is between Phe-Ile (F826-I827 in CrFC26).", "quote": "The unique proteolytic site due to endotoxin-activation of the Factor C enzyme is found between Phe-Ile: F762-I763 for CrFC21, and F826-I827 for CrFC26", "compares": ["P-CrFC26", "P-CrFC21"], "under": ["site:light-chain proteolysis", "trigger:endotoxin"], "stance": "supports", "confidence": 0.85, "evidence_figure": "Fig 5", "verify": false},
+    {"id": "AC9", "tier": "atomic", "basis": "computational", "text": "CrFC and TtFC Factor C cDNAs share 97.7% overall sequence homology.", "quote": "an overall homology of 97.7%", "value": 97.7, "unit": "% homology", "compares": ["P-CrFC26", "P-TtFC53"], "under": ["region:start-of-homology to poly(A)"], "stance": "supports", "confidence": 0.95, "evidence_figure": "Fig 5/Table 1", "verify": false},
+    {"id": "AC10", "tier": "atomic", "basis": "computational", "text": "The 3'UTR is the most divergent region (only 86% homology).", "quote": "Most of the dissimilarities ... were found in the 3' UTR, where a lower percentage homology of 86% was observed.", "value": 86, "unit": "% homology", "compares": ["P-CrFC26", "P-TtFC53"], "under": ["region:3'UTR"], "stance": "qualifies", "confidence": 0.9, "evidence_figure": "Fig 5", "verify": false},
+    {"id": "AC11", "tier": "atomic", "basis": "computational", "text": "CrFC26 has an extra 716 nt at the 5' end (and 64 extra aa upstream of start Met) vs TtFC53.", "quote": "the C. rotundicauda cDNA was found to be longer by 716 nucleotides at the 5' end, and it also has an extra 64 amino acids upstream from the starting met", "value": 716, "unit": "nt", "compares": ["P-CrFC26", "P-TtFC53"], "under": ["region:5' terminus"], "stance": "supports", "confidence": 0.9, "evidence_figure": "Fig 5/Fig 7", "verify": false},
+    {"id": "AC12", "tier": "atomic", "basis": "computational", "text": "CrFC21 and TtFC53 share identical 5'-end sequence -> CrFC21 is a distinct mRNA, not a truncated CrFC26.", "quote": "CrFC21 was not merely a truncated species of CrFC26; rather, it was derived from a totally distinct species of mRNA that is exactly identical to the one that gave rise to the T. tridentatus Factor C cDNA", "compares": ["P-CrFC21", "P-TtFC53", "P-CrFC26"], "under": ["region:5' end", "interpretation:differential splicing"], "stance": "supports", "confidence": 0.85, "evidence_figure": "Fig 7", "verify": false},
+    {"id": "AC13", "tier": "atomic", "basis": "experimental", "text": "Northern (low stringency, TtFC53) shows three bands (15.8, 5.9, 4.0 kNt); high-stringency homologous probe shows only 4.0 kNt.", "quote": "TtFC probe under low stringency of 42C showed three bands corresponding to 15.8, 5.9, and 4.0 kNt ... hybridization under high stringency with homologous EE fragment of CrFC26 revealed only the 4.0 kNt RNA band", "compares": ["P-amoebocyteRNA", "P-CrFC26"], "under": ["stringency:low vs high", "probe:heterologous vs homologous"], "stance": "supports", "confidence": 0.9, "evidence_figure": "Fig 1a,1b", "verify": false},
+    {"id": "AC14", "tier": "atomic", "basis": "experimental", "text": "A 368-bp 5'-end probe hybridizes to the ~4 kNt mRNA, confirming the cDNA is full-length.", "quote": "A single band of approximately 4 kNt ... indicates that the cDNA isolated is full-length and the entire 5' end of CrFC26 unequivocally belongs to this species of Factor C", "value": 368, "unit": "bp probe", "compares": ["P-CrFC26", "P-amoebocyteRNA"], "under": ["probe:368-bp EcoRI-NdeI", "stringency:high"], "stance": "supports", "confidence": 0.85, "evidence_figure": "Fig 1c", "verify": false},
+    {"id": "AC15", "tier": "atomic", "basis": "experimental", "text": "CrFC26 has four polyadenylation signals (AATAAA at nt 183, 239, 2474, 4142; functional one 19 nt upstream of poly(A)).", "quote": "the canonical hexanucleotide sequence AATAAA is present 19 nucleotides upstream from the polyadenylation site (at nucleotide position 4142). There are three other AATAAA sequences found at nucleotide positions 183, 239, and 2474", "value": 4, "unit": "AATAAA signals", "compares": ["P-CrFC26"], "under": ["readout:sequence", "interpretation:alternative polyadenylation"], "stance": "supports", "confidence": 0.9, "evidence_figure": "Fig 5", "verify": false},
+    {"id": "AC16", "tier": "atomic", "basis": "experimental", "text": "Restriction maps differ by species: CrFC has 2 BamHI sites vs 1 in TtFC53; CrFC26 has 2 HindIII vs 3 in TtFC53.", "quote": "CrFC has two BamHI sites compared with only one in TtFC53 ... only has two HindIII sites compared with three in the latter", "compares": ["P-CrFC26", "P-CrFC21", "P-TtFC53"], "under": ["readout:restriction mapping"], "stance": "supports", "confidence": 0.85, "evidence_figure": "Fig 3", "verify": false},
+    {"id": "AC17", "tier": "atomic", "basis": "computational", "text": "Single base substitutions explain inter-species restriction-site differences (BamHI 1549, HindIII 1724/2443, etc.).", "quote": "the absence of the BamHI (GGATCC) site in TtFC ... was due to the substitution of the first G with a T in TtFC ... a C-to-T base substitution ... responsible for the loss of the third HindIII", "compares": ["P-CrFC26", "P-CrFC21", "P-TtFC53", "P-TtFC41"], "under": ["readout:sequence alignment"], "stance": "supports", "confidence": 0.8, "evidence_figure": "Fig 5/Fig 3", "verify": false},
+    {"id": "AC18", "tier": "atomic", "basis": "experimental", "text": "Two clones (CrFC45, CrFC63) lack an internal EcoRI site and do not cross-hybridize with the 3'/TtFC41 probe.", "quote": "CrFC45 and CrFC63, did not cross-hybridize with either probe ... homologous to only the 5'-end region (EE fragment)", "compares": ["P-CrFC45", "P-CrFC63", "P-TtFC41"], "under": ["readout:Southern", "probe:3' EN/TtFC41"], "stance": "supports", "confidence": 0.8, "evidence_figure": "Fig 2/text", "verify": false},
+    {"id": "AC19", "tier": "atomic", "basis": "computational", "text": "CrFC26 5'UTR folds into hairpins obscuring the start codon; CrFC21 presents an exposed AUG.", "quote": "Numerous hairpin stems and loops are seen for the CrFC26, obscuring its real start codon, whereas CrFC21 showed a well-exposed AUG start site", "compares": ["P-CrFC26", "P-CrFC21"], "under": ["readout:computational mRNA folding"], "stance": "supports", "confidence": 0.8, "evidence_figure": "Fig 6a,6b", "verify": false},
+    {"id": "AC20", "tier": "atomic", "basis": "computational", "text": "Kyte-Doolittle hydropathy of residues 1-59 shows a hydrophobic peak over 1-24, the putative signal peptide.", "quote": "the first 24 residues to be the putative signal peptide rich in hydrophobic amino acids", "value": 24, "unit": "residues", "compares": ["P-CrFC26"], "under": ["readout:hydropathy, window=7"], "stance": "supports", "confidence": 0.85, "evidence_figure": "Fig 8", "verify": false},
+    {"id": "AC21", "tier": "atomic", "basis": "computational", "text": "CrFC26 has a mosaic architecture: 5 short consensus repeats, 1 lectin domain, 1 EGF-like domain, Cys-rich + Pro-rich regions, serine-protease domain (827-1083); no propeptide/kringle/finger.", "quote": "five short consensus repeats ... one lectin-domain (500-632), one EGF-like domain (167-200) ... The serine protease domain is found at positions 827-1083. No propeptide sequence, kringle domains ... or finger domains were found", "compares": ["P-CrFC26", "P-TtFC53"], "under": ["readout:domain homology assignment"], "stance": "supports", "confidence": 0.8, "evidence_figure": "Fig 5/text", "verify": false},
+    {"id": "AC22", "tier": "atomic", "basis": "computational", "text": "EMBL search: CrFC catalytic domain closest to TtFC (97.7%/777 bp), then thrombins/prothrombins (~52-57%); human hepsin 59.0%/278 bp.", "quote": "structurally closest to T. tridentatus Factor C, with 97.7% homology in 777 overlapping nucleotides (Table 1)", "value": 97.7, "unit": "% (777 bp)", "compares": ["P-CrFC26", "P-TtFC53"], "under": ["readout:EMBL homology search"], "stance": "supports", "confidence": 0.9, "evidence_figure": "Table 1", "verify": false},
+    {"id": "AC23", "tier": "atomic", "basis": "computational", "text": "CrFC is structurally closest to prothrombin/thrombin but catalytically trypsin-like, attributed to Asp1024 (analogous to trypsin Asp189).", "quote": "the CrFC is structurally closest to prothrombin and thrombin ... explained by the Asp1024 ... analogous to Asp189 in trypsin ... substrate specificity similar to that of trypsin", "compares": ["P-CrFC26"], "under": ["readout:homology + active-site residue", "analogy:trypsin Asp189"], "stance": "qualifies", "confidence": 0.75, "evidence_figure": "Table 1/text", "verify": false},
+    {"id": "NC1", "tier": "narrative", "basis": "computational", "text": "High Factor C DNA homology substantiates close molecular-evolutionary proximity of C. rotundicauda and T. tridentatus despite morphological/ecological/taxonomic disparity.", "quote": "The high degree of homology between Factor C from T. tridentatus and C. rotundicauda substantiates, at the molecular level, the proximity of these two species ... This finding contravenes the apparent disparities with respect to their morphology, ecological habitat, and taxonomical classification.", "compares": ["P-CrFC26", "P-CrFC21", "P-TtFC53", "P-TtFC41"], "under": ["interpretation:molecular phylogeny"], "stance": "supports", "decomposes_to": ["AC9", "AC11", "AC22", "AC12"], "confidence": 0.8, "evidence_figure": "Fig 5/Table 1", "verify": false},
+    {"id": "NC2", "tier": "narrative", "basis": "discussion", "text": "The two CrFC cDNA forms arise from differential splicing of the primary transcript around its 5' terminus.", "quote": "the existence of the two types of C. rotundicauda Factor C cDNA could be attributable to differential splicing of the initial primary transcript around its 5' terminal", "compares": ["P-CrFC26", "P-CrFC21"], "under": ["mechanism:differential splicing"], "stance": "neutral", "decomposes_to": ["AC12", "AC13", "AC15"], "confidence": 0.6, "verify": true},
+    {"id": "NC3", "tier": "narrative", "basis": "theoretical", "text": "Recombinant C. rotundicauda Factor C is commercially significant as the basis of a rapid endotoxin-detection kit for pharmaceutical QA.", "quote": "recombinant Factor C from C. rotundicauda would be of great significance to the pharmaceutical industry, in which pyrogen-detection constitutes an inherent part of quality assurance", "compares": ["P-CrFC21", "P-CrFC26"], "under": ["application:endotoxin detection", "priority:commercial QA", "theoretical — forward-looking, not demonstrated here"], "stance": "neutral", "decomposes_to": ["AC8"], "confidence": 0.45, "verify": true},
+    {"id": "NC4", "tier": "narrative", "basis": "discussion", "text": "CrFC21 constructs express more Factor C than CrFC26 in vitro (absence of false-start ATGs, accessible AUG, Kozak consensus).", "quote": "higher expression of Factor C from CrFC21 constructs (our unpublished data, patent pending) ... due to the absence of multiple false-start ATGs ... the more easily accessible AUG, and the presence of a consensus Kozak sequence", "compares": ["P-CrFC21", "P-CrFC26"], "under": ["readout:in vitro TnT", "caveat:unpublished/patent-pending"], "stance": "neutral", "decomposes_to": ["AC19"], "confidence": 0.4, "data_in_figure_only": true, "verify": true},
+    {"id": "NC5", "tier": "narrative", "basis": "theoretical", "text": "C. rotundicauda amoebocyte lysate is reportedly more sensitive to endotoxin than Limulus or Tachypleus lysates (Kim et al. 1988).", "quote": "its amoebocyte lysate has been found to be more sensitive to endotoxin than the Limulus or Tachypleus amoebocyte lysates (Kim et al., 1988)", "compares": ["P-amoebocyteRNA"], "under": ["application:endotoxin detection", "source:prior work, not this study"], "stance": "neutral", "confidence": 0.4, "verify": true}
+  ],
+  "conditions": [
+    {"dimension": "readout", "value": "Sanger DNA sequencing"},
+    {"dimension": "readout", "value": "Northern blot"},
+    {"dimension": "readout", "value": "Southern blot"},
+    {"dimension": "readout", "value": "EMBL homology search"},
+    {"dimension": "readout", "value": "computational mRNA folding"},
+    {"dimension": "readout", "value": "Kyte-Doolittle hydropathy"},
+    {"dimension": "readout", "value": "in vitro TnT expression"},
+    {"dimension": "stringency", "value": "low (42C, heterologous probe)"},
+    {"dimension": "stringency", "value": "high (65C, homologous probe)"},
+    {"dimension": "region", "value": "5' UTR"},
+    {"dimension": "region", "value": "ORF / catalytic domain"},
+    {"dimension": "region", "value": "3' UTR"},
+    {"dimension": "trigger", "value": "endotoxin activation (light-chain proteolysis)"},
+    {"dimension": "application", "value": "endotoxin / pyrogen detection"},
+    {"dimension": "interpretation", "value": "molecular phylogeny"},
+    {"dimension": "mechanism", "value": "differential splicing"},
+    {"dimension": "caveat", "value": "unpublished / patent-pending data"}
+  ],
+  "cites": [
+    {"ref": "Muta et al. 1991, Limulus (Tachypleus) Factor C mosaic structure, J Biol Chem 266:6554", "cito": "citesAsAuthority"},
+    {"ref": "Nakamura, Morita, Iwanaga 1986, LPS-sensitive Factor C zymogen, Eur J Biochem 154:511", "cito": "citesAsAuthority"},
+    {"ref": "Nakamura et al. 1988, Factor C activation by lipid A; endotoxin-binding heavy chain", "cito": "citesAsAuthority"},
+    {"ref": "Ding, Navas, Ho 1993a, two forms of Factor C purification/characterisation, BBA 1202:149", "cito": "citesAsAuthority"},
+    {"ref": "Kim, Ding, Ho 1988, endotoxin activation of C. rotundicauda clotting proteins", "cito": "supports"},
+    {"ref": "Srimal et al. 1985, coagulogen aa sequence of C. rotundicauda", "cito": "supports"},
+    {"ref": "Sanger, Nicklen, Coulson 1977, dideoxy sequencing", "cito": "usesMethodIn"},
+    {"ref": "Gubler & Hoffman 1983, cDNA library method", "cito": "usesMethodIn"},
+    {"ref": "Kyte & Doolittle 1982, hydropathy method", "cito": "usesMethodIn"},
+    {"ref": "Hartley 1970, serine-protease homologies (trypsin Asp189)", "cito": "citesAsAuthority"},
+    {"ref": "Furie & Furie 1988, molecular basis of blood coagulation", "cito": "citesAsAuthority"},
+    {"ref": "Kozak 1983/1986, translation initiation consensus", "cito": "citesAsAuthority"}
+  ],
+  "resolution_candidates": [
+    {"extracted": "National University of Singapore", "type": "Institution", "maybe_existing": null, "action": "CREATE-new (resolve ROR)"},
+    {"extracted": "Factor C (C. rotundicauda) / recombinant Factor C", "type": "Product/Reagent (:rFC)", "maybe_existing": "existing :rFC nodes", "action": "flag - foundational CrFC cloning; relate to :rFC, do NOT merge"},
+    {"extracted": "Carcinoscorpius rotundicauda", "type": "Organism (NCBITaxon)", "maybe_existing": null, "action": "new :Organism"},
+    {"extracted": "Tachypleus tridentatus", "type": "Organism (NCBITaxon)", "maybe_existing": null, "action": "new :Organism (also referenced by Mizumura PMC5302069)"},
+    {"extracted": "CITATION TIE: Mizumura 2017 (PMC5302069) cites Ding & Ho rFC work", "type": "Document-link", "maybe_existing": "PMC5302069 :Document", "action": "link (:PMC5302069)-[:CITES]->(this) once loaded"}
+  ],
+  "resolution": {
+    "institutions": [{"id": "INST_NUS", "name": "National University of Singapore", "city": "Singapore"}],
+    "doc_links": [],
+    "incoming_links": [{"from": "PMC5302069", "from_prop": "pmc", "rel": "CITES"}],
+    "create_nodes": [
+      {"labels": ["Organism"], "id": "TAXON_CROTUNDICAUDA", "name": "Carcinoscorpius rotundicauda", "props": {"note": "Singapore horseshoe crab"}, "links": [{"rel": "ABOUT", "dir": "in", "other": "DOC"}]},
+      {"labels": ["Organism"], "id": "TAXON_TTRIDENTATUS", "name": "Tachypleus tridentatus", "props": {"note": "also referenced by PMC5302069 (Mizumura)"}, "links": [{"rel": "ABOUT", "dir": "in", "other": "DOC"}]}
+    ],
+    "author_affiliations": {"*": "INST_NUS"}
+  },
+  "conflict_of_interest": {
+    "declared_by_authors": "not stated (1995 paper)",
+    "structural_coi": "academic (NUS) authors; NOT employed by a reagent manufacturer; BUT disclose a 'patent pending' on the favoured CrFC21 expression construct (NC4)",
+    "action": "low overall COI; mildly down-weight the CrFC21>CrFC26 expression claim (NC4) given the pending patent"
+  },
+  "completeness": {
+    "methods": 13, "preparations": 7, "atomic": 23, "narrative": 5,
+    "figures_accounted": {
+      "Fig 1 (Northern a/b/c)": "AC13, AC14",
+      "Fig 2 (restriction map, 16 clones)": "AC1, AC18",
+      "Fig 3 (full restriction maps)": "AC16, AC17, AC2 sizes",
+      "Fig 4 (sequencing strategy)": "procedural (M6) - no measured claim",
+      "Fig 5 (full DNA+aa alignment)": "AC2-AC11, AC15, AC17, AC21 (annotation legend)",
+      "Fig 6 (mRNA secondary structures)": "AC19",
+      "Fig 7 (5' sequence comparison, +716 nt)": "AC11, AC12",
+      "Fig 8 (Kyte-Doolittle hydropathy)": "AC20",
+      "Fig 9 (cloning schematic)": "procedural (M2) - no measured claim",
+      "Table 1 (EMBL homology)": "AC22, AC23, NC1"
+    },
+    "unaccounted_figures": []
+  },
+  "provenance": {
+    "source_id": "PMID7538401 (local PDF)",
+    "default_status": "[VERIFY]",
+    "extraction_stage": "extract-only (pre-verify, no resolution/load)",
+    "recommended_next": "verify-extraction; then load - NOTE loader must key on pmid (doi is null)"
+  }
+}

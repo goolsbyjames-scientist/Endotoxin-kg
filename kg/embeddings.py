@@ -5,6 +5,8 @@ Uses sentence-transformers to embed product/method/regulation descriptions,
 then stores vectors in Neo4j for semantic search.
 """
 
+import sys
+
 from sentence_transformers import SentenceTransformer
 from kg.connection import get_driver, get_database
 
@@ -141,11 +143,70 @@ def create_vector_indexes():
         print("\n✅ Vector indexes configured")
 
 
+def embed_extraction_nodes():
+    """Embed extracted :Claim (text) and :Document (title) nodes for search.
+
+    These are the nodes the ingestion pipeline adds. Embedding them lets the
+    existing RAG layer (kg/rag.py) find claims and papers by meaning, not just
+    the curated products it already searches.
+    """
+    driver = get_driver()
+    db = get_database()
+    model = load_embedding_model()
+
+    with driver.session(database=db) as session:
+        for label, prop in [("Claim", "text"), ("Document", "title")]:
+            # elementId() lets us match a node back regardless of its key.
+            result = session.run(
+                f"""
+                MATCH (n:{label})
+                WHERE n.{prop} IS NOT NULL AND n.embedding IS NULL
+                RETURN elementId(n) AS eid, n.{prop} AS text
+                """
+            )
+            rows = [(r["eid"], r["text"]) for r in result]
+            print(f"\n--- Embedding {len(rows)} :{label} nodes ---")
+            for i, (eid, text) in enumerate(rows):
+                emb = embed_text(model, text)
+                if emb:
+                    session.run(
+                        "MATCH (n) WHERE elementId(n) = $eid SET n.embedding = $e",
+                        eid=eid, e=emb,
+                    )
+                if (i + 1) % 10 == 0:
+                    print(f"  ✓ {i + 1}/{len(rows)}")
+    print("✅ Extraction-node embeddings stored")
+
+
+def create_extraction_indexes():
+    """Vector indexes for the extracted :Claim and :Document nodes."""
+    driver = get_driver()
+    db = get_database()
+    with driver.session(database=db) as session:
+        for name, label in [("claim_embeddings", "Claim"), ("document_embeddings", "Document")]:
+            session.run(
+                f"""
+                CREATE VECTOR INDEX {name} IF NOT EXISTS
+                FOR (n:{label}) ON (n.embedding)
+                OPTIONS {{indexConfig: {{`vector.similarity_function`: 'cosine'}}}}
+                """
+            )
+            print(f"✓ Vector index {name} on :{label}.embedding (cosine)")
+
+
 def main():
-    """Generate embeddings and create indexes."""
-    embed_products_and_methods()
-    create_vector_indexes()
-    print("\n🎉 Embedding layer complete!")
+    """Generate embeddings and create indexes.
+
+    Default: the curated products/methods. `--extraction`: the new :Claim /
+    :Document nodes added by the ingestion pipeline.
+    """
+    if "--extraction" in sys.argv:
+        embed_extraction_nodes()
+        create_extraction_indexes()
+    else:
+        embed_products_and_methods()
+        create_vector_indexes()
+    print("\n🎉 Embedding step complete!")
 
 
 if __name__ == "__main__":

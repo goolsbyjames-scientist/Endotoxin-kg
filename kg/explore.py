@@ -113,12 +113,55 @@ def samples(driver: Driver, per_label: int = 2) -> None:
             print(f"    - {props}")
 
 
+def write_snapshot(driver: Driver, path: str) -> None:
+    """Regenerate a Markdown schema snapshot from the LIVE graph.
+
+    This is how the endotoxin-graph skill's schema outline stays current without
+    anyone hand-editing it: the ingestion pipeline calls this after a load, so the
+    snapshot always reflects the labels and relationships actually present.
+    """
+    db = get_database()
+    lab, _, _ = driver.execute_query(
+        "MATCH (n) UNWIND labels(n) AS l RETURN l AS label, count(*) AS c ORDER BY c DESC",
+        database_=db,
+    )
+    rels, _, _ = driver.execute_query(
+        "MATCH ()-[r]->() RETURN type(r) AS t, count(*) AS c ORDER BY c DESC",
+        database_=db,
+    )
+    shp, _, _ = driver.execute_query(
+        """
+        MATCH (a)-[r]->(b)
+        RETURN labels(a)[0] AS src, type(r) AS rel, labels(b)[0] AS dst, count(*) AS c
+        ORDER BY c DESC
+        """,
+        database_=db,
+    )
+    lines = ["# Graph schema snapshot (auto-generated)\n",
+             "_Regenerated from the live graph by `kg.explore --write` after each load._",
+             "_Do not hand-edit; prefer `python -m kg.explore --schema` for live ground-truth._\n",
+             "## Node labels\n"]
+    lines += [f"- `:{r['label']}` — {r['c']}" for r in lab]
+    lines += ["\n## Relationship types\n"]
+    lines += [f"- `-[:{r['t']}]->` — {r['c']}" for r in rels]
+    lines += ["\n## Shape (how labels connect)\n"]
+    lines += [f"- `(:{r['src']})-[:{r['rel']}]->(:{r['dst']})` — {r['c']}" for r in shp]
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print(f"Wrote schema snapshot -> {path} ({len(lab)} labels, {len(rels)} rel types)")
+
+
 def main() -> None:
     # `--schema` prints just the shape (no sample nodes) — compact enough to
     # drop into a skill, a doc, or a prompt as live ground-truth.
+    # `--write <path>` regenerates a Markdown snapshot instead of printing.
     schema_only = "--schema" in sys.argv
     with get_driver() as driver:
         driver.verify_connectivity()
+        if "--write" in sys.argv:
+            path = sys.argv[sys.argv.index("--write") + 1]
+            write_snapshot(driver, path)
+            return
         labels(driver)
         label_combinations(driver)
         relationships(driver)
