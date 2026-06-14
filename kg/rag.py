@@ -7,6 +7,9 @@ Combines:
 3. Claude API (generation and reasoning)
 """
 
+import os
+import sys
+
 from sentence_transformers import SentenceTransformer
 import anthropic
 from kg.connection import get_driver, get_database
@@ -188,14 +191,88 @@ def rag_search(query: str, region: str = None, regulatory_body: str = None) -> d
     return result
 
 
-if __name__ == "__main__":
-    # Test example
-    import json
-    result = rag_search(
-        "What endotoxin testing products are available for pharmaceutical manufacturing?"
+# Cheap, fast model for grounded synthesis over retrieved claims.
+CLAIM_SYNTH_MODEL = "claude-haiku-4-5-20251001"
+
+
+def vector_search_claims(query: str, top_k: int = 6) -> list[dict]:
+    """Semantic search over the extracted :Claim layer (the ingested papers).
+
+    Unlike vector_search_products, this searches `claim_embeddings`. Each hit
+    carries WHERE it came from (source paper + year) and HOW the paper frames it
+    (stance + basis), so answers are sourced and stance-aware.
+    """
+    driver = get_driver()
+    db = get_database()
+    model = get_embedding_model()
+    qv = model.encode(query, convert_to_tensor=False).tolist()
+    with driver.session(database=db) as session:
+        result = session.run(
+            """
+            CALL db.index.vector.queryNodes('claim_embeddings', $k, $e)
+            YIELD node, score
+            OPTIONAL MATCH (d:Document)-[:REPORTS]->(:Evidence)-[:ASSERTS]->(node)
+            OPTIONAL MATCH (node)-[:COMPARES]->(p:Preparation)
+            RETURN node.text AS text, node.basis AS basis, node.stance AS stance,
+                   coalesce(d.pmc, d.pmid) AS source, d.year AS year,
+                   collect(DISTINCT p.abbrev) AS compares, score
+            ORDER BY score DESC
+            """,
+            k=top_k, e=qv,
+        )
+        return [r.data() for r in result]
+
+
+def query_claims(question: str, top_k: int = 6) -> None:
+    """Answer a question from the claims layer: retrieve, show sources, synthesize.
+
+    Synthesis needs ANTHROPIC_API_KEY (loaded from .env); without it you still get
+    the ranked, sourced claims, which is itself a useful answer.
+    """
+    hits = vector_search_claims(question, top_k)
+    print(f"\n# Top {len(hits)} claims for: {question!r}\n")
+    for h in hits:
+        cmp = (" vs ".join(c for c in h["compares"] if c)) if h["compares"] else ""
+        src = f"{h['source']} ({h['year']})" if h["source"] else "unsourced"
+        print(f"  [{h['score']:.2f}] {h['basis']}/{h['stance']}  {src}  {cmp}")
+        print(f"        {h['text']}")
+
+    if not os.getenv("ANTHROPIC_API_KEY"):
+        print("\n(Set ANTHROPIC_API_KEY in .env to also get a synthesized, cited answer.)")
+        return
+
+    context = "\n".join(
+        f"- ({h['source']} {h['year']}, {h['basis']}/{h['stance']}) {h['text']}" for h in hits
     )
-    print("\n" + "=" * 60)
-    print("RAG RESPONSE:")
-    print("=" * 60)
-    print(json.dumps(result, indent=2, default=str))
+    client = anthropic.Anthropic()
+    msg = client.messages.create(
+        model=CLAIM_SYNTH_MODEL,
+        max_tokens=600,
+        system=(
+            "Answer ONLY from the provided claims; cite each statement with its source id. "
+            "Respect stance/basis: a 'theoretical' or 'discussion' claim is an argument, not a "
+            "demonstrated result; flag when support is conditional or when the authors have a "
+            "conflict of interest. If the claims disagree or don't answer the question, say so."
+        ),
+        messages=[{"role": "user", "content": f"Question: {question}\n\nClaims:\n{context}"}],
+    )
+    print("\n# Synthesized answer (grounded in the claims above)\n")
+    print(msg.content[0].text)
+
+
+if __name__ == "__main__":
+    if "--claims" in sys.argv:
+        i = sys.argv.index("--claims")
+        question = " ".join(sys.argv[i + 1:]).strip() or \
+            "Is recombinant Factor C equivalent to LAL for endotoxin detection?"
+        query_claims(question)
+    else:
+        import json
+        result = rag_search(
+            "What endotoxin testing products are available for pharmaceutical manufacturing?"
+        )
+        print("\n" + "=" * 60)
+        print("RAG RESPONSE (products):")
+        print("=" * 60)
+        print(json.dumps(result, indent=2, default=str))
 
